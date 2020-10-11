@@ -1,0 +1,272 @@
+<h2 class="Title">Administation</h2>
+
+<!-- Si Login Admin -->
+<?php if (array_key_exists( 'firstName', $_SESSION ) && $_SESSION['role'] != 'user'):?>
+
+<!-- User --------->
+	<section class="third adminUser">
+
+		<h1 class="Title">Gestion Utilisateurs</h1>
+		<!-- View user -->
+		<article class="bubble scroller">
+			<form method="post"  action="admin.php" enctype="multipart/form-data">
+				<?php foreach($result_User as $user): ?>
+					<div class="bubble-text">
+						<!-- Delete user -->
+						<a href="admin.php?id=<?= $user['id'] ?>" class="btn-blue" title="Supprimer"><i class="fas fa-trash-alt"></i></a>
+						<h4><?= nl2br(htmlspecialchars($user['age'])) ?> ans </h4>
+						<h4><?= nl2br(htmlspecialchars($user['email'])) ?></h4>
+						<h5><?= htmlspecialchars($user['firstName']) ?></h5>	
+						<hr>
+						<img src="img/avatars/<?php echo $user['avatar']; ?>"/>
+						
+						<!-- Gestion du rôle user / admin 
+
+							<form action="admin.php?id=<?= $user['id']; ?>" method="POST" enctype="multipart/form-data">
+								<h2>Edition role &nbsp; <i class="fas fa-edit"></i> </h2>
+								<input type="text" value="<?php echo $user['role']; ?>" name="user_Role_change">
+							    <label>Role</label>
+								<input type="submit" name="ok"> 
+							</form>
+							<form action="admin.php?id=<?= $user['id']; ?>" method="POST" enctype="multipart/form-data">
+								<select name="role">
+				                    <option <?php if($user['role'] == 'user') {?> selected <?php }?> value="user" >User</option>
+				                    <option <?php if($user['role'] == 'admin') {?> selected <?php }?> value="admin" >Admin</option>
+				                </select>
+				                <button type="submit">Envoyer</button>
+							</form> -->
+						 
+					</div>
+				<?php endforeach; ?>
+			</form> 
+		</article>
+	</section>
+
+<!-- Header ------->
+	<!-- Edit -->
+	<section class="first edit">
+		<!-- Edition -->
+		<article class="formulaires">
+			<form action="admin.php" method="POST" enctype="multipart/form-data">
+				
+				<h1>Edition Header <i class="fas fa-edit"></i></h1>
+				<!-- Post -->
+				<div class="group">      
+					<input type="text" required name="titleHeader">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Titre</label>
+			    </div>
+				<div class="group upload">      
+				 	<input type="hidden"  name="MAX_FILE_SIZE" value="2097152">
+				 	<input type="file" required name="photoHeader" class="photo">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+				</div>
+				<button class="btn-blue" type="submit" name="ok">Confirmer</button>
+			</form>
+		</article>
+	</section>
+	<!-- View -->
+	<section class="second viewAdmin">
+		
+		<h1> Header </h1>
+		<!-- Formulaire -->
+		<form method="post"  action="index.php" enctype="multipart/form-data">
+		<!-- Jquery slider.js -->
+			<article class="articles-Slider">
+				<!-- Afficher Article -->
+				<?php foreach($result_Header as $header): ?>
+					<div class="cards">
+						<a href="admin.php?id=<?= $header['Id'] ?>" title="Supprimer" class="btn-blue" ><i class="fas fa-trash-alt"></i></a>
+
+						<div class="card">									
+							<!-- IMG -->
+							<div class="image">
+								<img class="card__image"src="img/header/<?php echo $header['Img']; ?>"/>
+							</div>
+							<!-- TITLE -->
+							<div class="title">
+							  	<p><?= htmlspecialchars($header['Title']) ?></p>
+							</div>
+						</div><!-- /card -->
+					</div><!-- /cards -->
+				<?php endforeach; ?>
+			</article>
+		</form>
+	</section>
+
+<!-- Articles ----->
+	<!-- Edit  -->
+	<section class="first edit">
+		<article class="formulaires">
+			<form action="admin.php" method="POST" enctype="multipart/form-data">
+				
+				<h1 class="">Edition Articles <i class="fas fa-edit"></i></h1>
+				<!-- Post -->
+				<div class="group">      
+					<input type="text" required name="titleArticle">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Titre</label>
+			    </div>
+
+			    <div class="group">      
+					<input type="text" required name="authorArticle">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Auteur</label>
+			    </div>
+
+			    <div class="group">      
+					<textarea required name="contentsArticle" rows="1"></textarea>
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Contenu</label>
+			    </div>
+
+				<div class="group upload">      
+				 	<input type="hidden"  name="MAX_FILE_SIZE" value="2097152">
+					 <input type="file" required name="photoArticle" class="photo">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+				</div>
+				<button class="btn-blue" type="submit" name="ok">Confirmer</button>
+			</form>
+		</article>
+	</section>
+	<!-- View -->
+	<section class="second viewAdmin">
+
+		<h1> Articles </h1>
+		<!-- Formulaire -->
+		<form method="post"  action="index.php" enctype="multipart/form-data">
+		<!-- Jquery slider.js -->
+			<article class="articles-Slider">
+				<!-- Afficher Article -->
+				<?php foreach($result_Articles as $article): ?>
+					<div class="cards">
+						<a href="admin.php?id=<?= $article['Id'] ?>" title="Supprimer" class="btn-blue" ><i class="fas fa-trash-alt"></i></a>
+
+						<div class="card">									
+							<!-- IMG -->
+							<div class="image">
+								  <img class="card__image" src="img/articles/<?php echo $article['Img']; ?>"/>
+							</div>
+							<!-- TITLE -->
+							<div class="title">
+								<h4><?= htmlspecialchars($article['Title']) ?></h4>
+								<p class="content"><?= substr(htmlspecialchars($article['Content']), 0, 30) ?>&nbsp;...</p>
+							</div>
+						</div><!-- /card -->
+					</div><!-- /cards -->
+				<?php endforeach; ?>
+			</article>
+		</form>
+	</section>
+
+<!-- Commandes ---->
+	<!-- Edit -->
+	<section class="first edit">
+		<article class="formulaires">
+			<form action="admin.php" method="POST" enctype="multipart/form-data">
+				
+				<h1>Edition Commandes <i class="fas fa-edit"></i></h1>
+				<!-- Post -->
+
+				<div class="group">      
+					<input type="text" required name="titleCommande">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Titre</label>
+			    </div>
+
+				<div class="group">      
+					<input type="text" required name="contentCommande">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Contenu</label>
+			    </div>
+
+			    <div class="group">      
+					<input type="text" required name="priceCommande">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Prix</label>
+			    </div>
+
+			    <div class="group">      
+					<textarea required name="cateroryCommande" rows="1"></textarea>
+					<span class="highlight"></span>
+					<span class="bar"></span>
+			        <label>Category</label>
+			    </div>
+
+				<div class="group upload">      
+				 	<input type="hidden"  name="MAX_FILE_SIZE" value="2097152">
+					 <input type="file" required name="photoCommande" class="photo">
+					<span class="highlight"></span>
+					<span class="bar"></span>
+				</div>
+				<button class="btn-blue" type="submit" name="ok">Confirmer</button>
+			</form>
+		</article>
+	</section>
+	<!-- View -->
+	<section class="second viewAdmin">
+
+		<h1> Commandes </h1>
+		<!-- Formulaire -->
+		<form method="post"  action="index.php" enctype="multipart/form-data">
+		<!-- Jquery slider.js -->
+			<article class="articles-Slider">
+				<!-- Afficher Article -->
+				<?php foreach($result_Commandes as $commande): ?>
+					<div class="cards">
+						<a href="admin.php?id=<?= $commande['Id'] ?>" title="Supprimer" class="btn-blue" ><i class="fas fa-trash-alt"></i></a>
+
+						<div class="card">									
+							<!-- IMG -->								
+							<h3><?= htmlspecialchars($commande['Category']) ?></h3>
+
+							<div class="image">
+								  <img class="card__image" src="img/commandes/<?php echo $commande['Img']; ?>"/>
+							</div>
+							<!-- TITLE -->
+							<div class="title">
+								<h4><?= htmlspecialchars($commande['Title']) ?> - 
+									<?= htmlspecialchars($commande['Price']) ?>€</h4>
+								<p class="content"><?= substr(htmlspecialchars($commande['Content']), 0, 30) ?>&nbsp;...</p>
+							</div>
+						</div><!-- /card -->
+					</div><!-- /cards -->
+				<?php endforeach; ?>
+			</article>
+		</form>
+	</section>
+
+<!-- Comments ----->
+	<h2 class="Title">Administation</h2>
+
+	<section class="third adminComment">
+		<h1 class="Title">Commentaires</h1>
+	
+		<!-- View post -->
+		<article class="bubble scroller">
+			<form method="post"  action="index.php" enctype="multipart/form-data">
+				<?php foreach($result_Comm as $comment): ?> 
+					<div class="bubble-text">
+						
+						<a href="admin.php?id=<?= $comment['Id'] ?>" class="btn-blue" title="Supprimer"><i class="fas fa-trash-alt"></i></a>
+
+						<h4><?= nl2br(htmlspecialchars($comment['Comm_Content'])) ?></h4>
+						<h5><?= nl2br(htmlspecialchars($comment['Comm_Author'])) ?></h5>	
+						<hr>
+						<img src="img/avatars/<?php echo $comment['Comm_Img']; ?>" alt="image user"/>
+					</div>
+				<?php endforeach; ?>
+			</form> 
+		</article>
+	</section>
+
+<?php endif ?>

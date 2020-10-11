@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>La cuisine de Mehdi</title>
+		<!-- Caractère spéciaux -->
+		<meta charset="utf-8">
+		<!-- jquery (run header-Slider / section-Slider / basket) -->
+		<script type="text/javascript" src="js/jquery/jQuery-version-2.1.js"></script>		
+		<!-- icon fontawesome -->
+	  	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	  	<!-- google font -->
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+	  	<!-- css : normalize -->
+		<link rel="stylesheet" type="text/css" href="css/normalize.css">
+		<!-- css : header-Slider / section-Slider -->
+		<link rel="stylesheet" type="text/css" href="css/pluginsJquery-Slider.css">
+		<!-- css style -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+<body>
+	<!-- Navigation -->
+	<nav class="container">
+		<!-- Logo / Flag -->
+		<section>
+			<img src="img/logo.png" alt="Logo de l'entreprise">
+			<p class="flag">
+				<img src="img/flag/France.png" title="Influence : Cuisine Française" alt="influence cuisine Française">
+				<img src="img/flag/italie.png" title="Influence : Cuisine Italienne"alt="influence cuisine Italienne">
+				<img src="img/flag/spain.png" title="Influence : Cuisine Espagnole" alt="influence cuisine Espagnole">
+				<img src="img/flag/afrique.png" title="Influence : Cuisine Africaine" alt="influence cuisine Africaine">
+				<img src="img/flag/japon.png" title="Influence : Cuisine Japonnaise" alt="influence cuisine Japonnaise">
+				<img src="img/flag/thai.png" title="Influence : Cuisine Thailandaise" alt="influence cuisine Thailandaise">
+				<img src="img/flag/indien.png" title="Influence : Cuisine Indienne" alt="influence cuisine Indienne">	
+			</p>
+		</section>
+		
+		<!-- Menu -->
+		<section>
+			<input type="checkbox" class="trigger" id="navigation">
+			<!-- Bouton burger -->
+		    <label for="navigation" class="burger">
+				<span>&nbsp;</span>
+				<span>&nbsp;</span>
+				<span>&nbsp;</span>
+		    </label>
+			<!-- Navigation -->
+			<ul>
+				<li><a href="index.php" title="Accueil"><i class="fas fa-home"></i>Home</a></li>
+				<?php if (!empty($_SESSION)):?>
+					<li><a href="shop.php" title="Boutique"><i class="fas fa-store"></i>Shop</a></li> 
+					<li><a href="profil.php" title="Profil"><i class="far fa-user"></i>Profil</a></li> 
+					
+					<?php if ( $_SESSION['role'] != 'user' && !empty($_SESSION) ):?>
+						<li><a href="admin.php" title="Administration"><i class="fas fa-unlock-alt"></i>Admin</a></li> 
+					<?php endif; ?>
+
+					<li><a href="logout.php" title="Déconnexion"><i class="fas fa-sign-out-alt"></i>Logout</a></li> 
+				<?php else: ?>
+					<li><a href="register.php" title="Création de compte" class="modal-trigger" data-modal="modal-register"><i class="far fa-registered"></i>Register</a></li> 
+					<li><a href="login.php" title="Connexion" class="modal-trigger" data-modal="modal-login"><i class="fas fa-sign-in-alt"></i>Login</a></li> 
+				<?php endif; ?>  
+			</ul>
+		</section>
+	</nav>
+
+	<!-- Header -->
+	<header class="container">
+		<!-- FORM HEADER.PHP -->			
+		<form action="index.php" method="POST" enctype="multipart/form-data">	
+			<!-- Section Silder JQuery -->			
+			<section class="header-Slider">
+				<?php foreach($result_Header  as $header): ?>
+					<article class="content">
+						<img src="img/header/<?php echo $header['Img'] ?>" alt="Image entète du site">
+						<div class="info">
+							<div>
+								<h1><?= htmlspecialchars($header['Title']) ?></h1>
+							</div>
+						</div>
+					</article>
+				<?php endforeach; ?>		
+			</section>
+		</form>
+		
+		<!-- Section "présentation" -->			
+		<section>
+			<article>
+				<a href="img/cv.pdf" class="btn-white" title="Parcours du chef">Parcours du chef</a>
+				<!-- Phrase accueil -->			
+				<?php if (array_key_exists( 'firstName', $_SESSION )):?> 
+					<p>"connecté" </p>
+					
+					<?php else: ?>
+						<p class="welcome">
+							<a href="register.php" title="Création de compte" class="modal-trigger login" data-modal="modal-register">"créez votre espace" </a> 
+							et/ou <a href="login.php" title="Connexion" class="modal-trigger login" data-modal="modal-login"> "connectez-vous" </a>
+						</p>
+				<?php endif ?>
+			</article>
+		</section>
+	</header>
+
+	<!-- Modal Sections -->
+	<section class="modal" id="modal-login">
+		<div class="modal-sandbox"></div>
+		<div class="modal-box">
+			<div class="modal-head">
+				<h2><i class="fas fa-sign-in-alt"></i>Login</h2>
+				<div class="close-modal"><i class="fas fa-times-circle "></i></div> 
+			</div>
+			<div class="modal-body">
+				<!-- FORM LOGIN.PHP -->			
+				<form autocomplete="off" action="login.php" method="POST" enctype="multipart/form-data">
+					<article class="formulaires">		     
+						<h3>Identifiez-vous ci-dessous afin d'accéder au site</h3>
+						<div class="group">
+							<input type="text" name="email" required />
+							<span class="bar"></span>
+					        <label><i class="fas fa-envelope"></i> Email</label>
+					    </div>
+						<div class="group">
+							<input type="password" name="psw" required />
+							<span class="bar"></span>
+							<label><i class="fas fa-unlock-alt"></i> Password</label>
+						</div>
+						<div class="group">
+						<input type="submit" name="ok" value="Confirmer" class="btn-submit" > 
+						</div>		
+				    </article>
+				</form>
+			</div>
+		</div>
+	</section>
+	
+	<section class="modal" id="modal-register">
+		<div class="modal-sandbox"></div>
+		<div class="modal-box">
+			<div class="modal-head">
+				<h2><i class="fas fa-sign-in-alt"></i>Register</h2>
+				<div class="close-modal"><i class="fas fa-times-circle "></i></div> 
+			</div>
+			<div class="modal-body">
+				<!-- FORM LOGIN.PHP -->			
+				<form autocomplete="off" class="generic-form" action="register.php" method="POST" enctype="multipart/form-data">
+					<article class="formulaires">		     
+						<h3>Créez votre espace ci-dessous et dirigez-vous vers la page login</h3>
+						<div class="group">
+							<input type="text" name="firstName" required />
+							<span class="bar"></span>
+					        <label><i class="fas fa-user"></i> Prénom</label>
+					    </div>
+					    <div class="group">
+							<input type="text" name="lastName" required />
+							<span class="bar"></span>
+					        <label><i class="far fa-id-card"></i> Nom</label>
+					    </div>
+					    <div class="group">
+							<input type="number" name="age" required />
+							<span class="bar"></span>
+					        <label><i class="fas fa-user-circle"></i> Age</label>
+					    </div>
+					    <div class="group">
+							<input type="email" name="email" required />
+							<span class="bar"></span>
+					        <label><i class="fas fa-envelope"></i> Email</label>
+					    </div>
+
+					    <div class="group">
+							<input type="password" name="psw" required />
+							<span class="bar"></span>
+					        <label><i class="fas fa-unlock-alt"></i> Password</label>
+					    </div>
+
+					    <div class="group">
+						<input type="submit" name="ok" value="Confirmer" class="btn-submit"> 
+						</div>	
+					</article>
+				</form>
+			</div>
+		</div>
+	</section>
+	
+	<!-- Php Templating -->
+	<main class="container">
+		<?php include 'www/'.$template.'.phtml';?>
+	</main>
+	
+	<!-- Footer -->
+	<footer class="container">
+		<section>
+		    <article class="social">
+		       <a href="#" class="insta" title="Instagram"><i class="fab fa-instagram"></i></a>
+		       <a href="#" class="facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+		       <a href="#" class="twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+		       <a href="#" class="google" title="Google +"><i class="fab fa-google-plus-g"></i></a>
+		       <a href="#" class="linkedin" title="Linkedin"><i class="fab fa-linkedin"></i></a>
+		     </article>				
+		</section>
+		<section>
+			<small>&copy; 2020 Mehdi Baileche All Rights Reserved | Website delivered by Florian Crépieux
+			</small>
+		</section>
+	</footer>	
+
+	<!-- script -->
+	<script src="js/basket.js"></script>
+	<script src="js/slider.js"></script>
+	<script src="js/cards.js"></script>
+	<script src="js/modal.js"></script>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+<h1 class="Title">Profil</h1>
+
+<!-- Si Login -->
+<?php if (array_key_exists( 'firstName', $_SESSION )):?>
+
+	<!-- User information -->
+	<form method="POST" action="profil.php" enctype="multipart/form-data">
+		<section class="first">
+			<!-- Image User -->
+			<article class="profilImg">
+
+				<form method="POST" action="profil.php" enctype="multipart/form-data">
+					<img src="img/avatars/<?php echo $_SESSION['avatar']; ?>">
+					<input type="file" name="avatar" placeholder="avatar" />
+					<input type="submit" name="submit" value="save"/>
+				</form>
+
+			</article>
+			
+			<!-- Info User -->
+			<article>
+				<h2><a href="#"><i class="fas fa-edit"></i> Modifier vos informtions</a></h2>
+				
+				<!-- view -->
+				<div class="profil">
+					<p class="profilUser"> Nom :</p>
+					<p class="profilUser"> Prénom :</p>
+					<p class="profilUser"> Email :</p>
+					<p class="profilUser"> Age :</p>
+				</div><!--
+				 
+				 Edit 
+			 --><div class="profil formulaires">
+					<form method="POST" action="profil.php">
+						<div class="profilUser group">
+							<input type="text" name="newlastName" value="<?php echo $_SESSION['lastName']; ?>" />		
+							<span class="bar"></span>
+						</div>
+						<div class="profilUser group">
+							<input type="text" name="newfirstName" value="<?php echo $_SESSION['firstName'];  ?>" />
+							<span class="bar"></span>
+						</div>
+						<div class="profilUser group">
+							<input required type="email" name="newMail" value="<?php echo  $_SESSION['email'] ?>" />
+							<span class="bar"></span>
+						</div>
+						<div class="profilUser group">
+							<input type="number" name="newage" value="<?php echo $_SESSION['age'] ?>" />
+							<span class="bar"></span>
+						</div>
+						<button class="btn-blue" type="submit">Modifier</button>
+					</form>
+				</div>
+			</article>
+		</section>
+
+		<!-- Mot de passe -->
+		<section class="mdp second">
+			<article class="formulaires">
+
+				<h1 href="#"><i class="fas fa-lock"></i> Mot de passe </h1>
+				
+				<form method="POST" action="profil.php" enctype="multipart/form-data">
+
+					<div class="profilUser group">
+						<input type="text" placeholder="New Password" name="newmdp1"required="Champ obligatoire"/>		
+						<span class="bar"></span>
+					</div>
+
+					<div class="profilUser group">
+						<input type="text" placeholder="Confirm Password " name="newmdp2"required="Champ obligatoire"/>		
+						<span class="bar"></span>
+					</div>
+					<div class="profilUser group">
+						<button class="btn-blue" type="submit">Modifier</button>
+						<span class="bar"></span>
+					</div>
+				</form>
+			</article>
+		</section>
+
+	</form>
+	
+<?php endif ?>

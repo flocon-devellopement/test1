@@ -1,0 +1,99 @@
+<h1 class="Title">Boutique</h1>
+
+<?php if (array_key_exists( 'firstName', $_SESSION )):?>
+
+	<!-- Présentation -->
+	<section class="first">
+		<!-- Panier -->
+		<article id="basket">	 
+
+			<h1><a id="payer"><i class="fas fa-shopping-cart"></i> <span class="total"></span></a></h1>
+			
+			<ul data-food="commandes" class="scroller">
+			</ul>
+				<p class="panier"><i class="fas fa-times-circle"></i></p>
+				<p class="panier" id="toggle" data-food="commandes"><i class="fas fa-arrow-circle-down"></i></p>
+				<p class="panier paiement"><i class="fas fa-check-circle"></i></p>					
+		</article> 		
+		
+		<!-- Présentation boutique -->
+		<article>
+			<h2>Découvrez la boutique du chef !</h2>
+			<div>
+				<p>Vous pouvez aussi cliquer sur « Personnaliser » pour restreindre le partage et voir nos fournisseurs. Vous pouvez modifier ces choix à tout moment."</p>
+			</div>
+		</article>
+	</section>
+
+	<!-- Commandes -->
+	<section class="second">
+		<!-- Formulaire -->
+		<form method="post" action="basket.php" enctype="multipart/form-data">
+
+			<!-- Afficher Catergory Commandes -->
+			<?php foreach($result_Category as $category): ?>
+
+				<h1 class="category"><?= htmlspecialchars($category['Category']) ?></h1>
+
+				<!-- Jquery slider.js -->
+				<article class="articles-Slider" data-food="commandes">
+
+					<!-- Afficher Commandes -->
+					<?php foreach($result_Commandes as $commande): 
+
+						// Classement Commandes par Catégory
+						if( $category['Category'] == $commande['Category'] ) { ?>
+						
+							<div class="cards" data-price="<?php echo $commande['Price']; ?>">
+								<!-- ADD -->
+								<a class="ajouter btn-blue">Ajouter</a>	
+								<!-- CARD -->
+								<div class="card">
+									<!-- IMG -->
+									<div class="image">
+									  <img src="img/commandes/<?php echo $commande['Img']; ?>"/>
+									</div>
+									<!-- TITLE -->
+									<div class="title">
+										<a href="#" class="toggle-info btn-slider" title="cliquez ici">
+									    	<span class="left"></span>
+									    	<span class="right"></span>
+									  	</a>
+										<h3 class="titleJs"><?= htmlspecialchars($commande['Title']) ?></h3>
+										<p class="content"><?= substr(htmlspecialchars($commande['Content']), 0, 30) ?>&nbsp;...</p>
+									</div>
+									<!-- CONTENT HIDDEN -->
+									<div class="card-flap flap1">
+										<button class="btn-slider btn-blue"><?= htmlspecialchars($commande['Price']) ?>€</button>
+										<div class="card-description">
+											<p class="content"><?= nl2br(htmlspecialchars($commande['Content'])) ?> </p>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?php }
+
+					endforeach; ?>
+				</article>
+
+			<?php endforeach; ?>
+			
+		</form>
+	</section>
+
+<?php endif ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
